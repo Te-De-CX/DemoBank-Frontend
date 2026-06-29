@@ -9,7 +9,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { User, Lock, Shield, Eye, EyeOff, Check, AlertTriangle } from "lucide-react";
+import axios from "axios";
 
+type ProfileForm = z.infer<typeof profileSchema>;
+type PasswordForm = z.infer<typeof passwordSchema>;
 /* ─── Schemas ──────────────────────────────────────────────────────── */
 const profileSchema = z.object({
   first_name: z.string().min(1, "First name is required"),
@@ -129,23 +132,45 @@ export default function SettingsPage() {
   } = useForm({ resolver: zodResolver(passwordSchema) });
 
   const updateProfile = useMutation({
-    mutationFn: (data: any) => api.put("/auth/profile/", data),
+    mutationFn: (data: ProfileForm) =>
+      api.put("/auth/profile/", data),
     onSuccess: (res) => {
       setUser(res.data);
       toast({ title: "Profile updated", description: "Your details have been saved.", variant: "success" });
     },
-    onError: (err: any) =>
-      toast({ title: "Update failed", description: err.response?.data?.error, variant: "destructive" }),
+    onError: (err: unknown) => {
+      const message =
+        axios.isAxiosError(err)
+          ? err.response?.data?.error ?? "Failed to update profile."
+          : "Failed to update profile.";
+    
+      toast({
+        title: "Update failed",
+        description: message,
+        variant: "destructive",
+      });
+    },
   });
 
   const changePassword = useMutation({
-    mutationFn: (data: any) => api.put("/auth/change-password/", data),
+    mutationFn: (data: PasswordForm) =>
+      api.put("/auth/change-password/", data),
     onSuccess: () => {
       resetPw();
       toast({ title: "Password changed", description: "Your new password is active.", variant: "success" });
     },
-    onError: (err: any) =>
-      toast({ title: "Failed", description: err.response?.data?.error, variant: "destructive" }),
+    onError: (err: unknown) => {
+      const message =
+        axios.isAxiosError(err)
+          ? err.response?.data?.error ?? "Failed to change password."
+          : "Failed to change password.";
+    
+      toast({
+        title: "Failed",
+        description: message,
+        variant: "destructive",
+      });
+    },
   });
 
   const enable2FA = useMutation({

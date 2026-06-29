@@ -22,6 +22,13 @@ export default function LoginPage() {
   const [is2FA, setIs2FA] = useState(false);
   const [totp, setTotp] = useState("");
 
+  type ApiError = {
+    response?: {
+      data?: {
+        error?: string;
+      };
+    };
+  };
   const {
     register,
     handleSubmit,
@@ -46,8 +53,13 @@ export default function LoginPage() {
           router.push("/dashboard");
         }
       }
-    } catch (err: any) {
-      const msg = err.response?.data?.error || "Login failed. Please check your credentials.";
+    } catch (err: unknown) {
+      const error = err as ApiError;
+    
+      const msg =
+        error.response?.data?.error ??
+        "Login failed. Please check your credentials.";
+    
       toast({
         title: is2FA ? "Invalid 2FA code" : "Login failed",
         description: msg,
@@ -85,7 +97,7 @@ export default function LoginPage() {
               { icon: Shield,     label: "Security score",   value: "Excellent", color: "#5CC8F0", bg: "rgba(92,200,240,0.1)"  },
               { icon: TrendingUp, label: "Saved this month", value: "$320.00",   color: "#FCA75C", bg: "rgba(252,167,92,0.1)" },
             ].map(({ icon: Icon, label, value, color, bg }) => (
-              <div key={label} className="bg-white/4 border border-white/[0.06] rounded-xl p-4">
+              <div key={label} className="bg-white/4 border border-white/6 rounded-xl p-4">
                 <div className="w-7 h-7 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: bg }}>
                   <Icon className="w-3.5 h-3.5" style={{ color }} />
                 </div>
@@ -96,7 +108,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="relative bg-white/4 border border-white/[0.08] rounded-2xl p-4 flex items-center gap-3">
+        <div className="relative bg-white/4 border border-white/8 rounded-2xl p-4 flex items-center gap-3">
           <div className="w-8 h-8 rounded-xl bg-[#5CF0B0]/15 flex items-center justify-center flex-shrink-0">
             <Shield className="w-4 h-4 text-[#5CF0B0]" />
           </div>
@@ -147,10 +159,10 @@ export default function LoginPage() {
                       placeholder="you@example.com"
                       autoComplete="email"
                       {...register("email")}
-                      className={`w-full bg-white/4 border hover:border-white/[0.14] focus:bg-white/[0.06] outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-4 py-3 rounded-xl transition-all duration-200 ${
+                      className={`w-full bg-white/4 border hover:border-white/[0.14] focus:bg-white/6 outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-4 py-3 rounded-xl transition-all duration-200 ${
                         errors.email
                           ? "border-[#FC5C7D]/60 focus:border-[#FC5C7D]/80"
-                          : "border-white/[0.08] focus:border-[#7C5CFC]/60"
+                          : "border-white/8 focus:border-[#7C5CFC]/60"
                       }`}
                     />
                   </div>
@@ -177,10 +189,10 @@ export default function LoginPage() {
                       placeholder="Your password"
                       autoComplete="current-password"
                       {...register("password")}
-                      className={`w-full bg-white/4 border hover:border-white/[0.14] focus:bg-white/[0.06] outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-10 py-3 rounded-xl transition-all duration-200 ${
+                      className={`w-full bg-white/4 border hover:border-white/[0.14] focus:bg-white/6 outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-10 py-3 rounded-xl transition-all duration-200 ${
                         errors.password
                           ? "border-[#FC5C7D]/60 focus:border-[#FC5C7D]/80"
-                          : "border-white/[0.08] focus:border-[#7C5CFC]/60"
+                          : "border-white/8 focus:border-[#7C5CFC]/60"
                       }`}
                     />
                     <button
@@ -239,7 +251,7 @@ export default function LoginPage() {
                     placeholder="000000"
                     value={totp}
                     onChange={(e) => setTotp(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                    className="w-full bg-white/4 border border-white/[0.08] hover:border-white/[0.14] focus:bg-white/[0.06] outline-none text-[20px] font-display font-bold text-white placeholder:text-white/15 text-center tracking-[0.35em] py-3.5 rounded-xl transition-all duration-200 focus:border-[#7C5CFC]/60"
+                    className="w-full bg-white/4 border border-white/8 hover:border-white/[0.14] focus:bg-white/6 outline-none text-[20px] font-display font-bold text-white placeholder:text-white/15 text-center tracking-[0.35em] py-3.5 rounded-xl transition-all duration-200 focus:border-[#7C5CFC]/60"
                     autoFocus
                   />
                 </div>
@@ -273,9 +285,9 @@ export default function LoginPage() {
             {!is2FA && (
               <>
                 <div className="flex items-center gap-3 my-1">
-                  <div className="flex-1 h-px bg-white/[0.06]" />
+                  <div className="flex-1 h-px bg-white/6" />
                   <span className="text-[11px] text-white/25">or continue with</span>
-                  <div className="flex-1 h-px bg-white/[0.06]" />
+                  <div className="flex-1 h-px bg-white/6" />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   {[
@@ -302,7 +314,7 @@ export default function LoginPage() {
                     <button
                       key={label}
                       type="button"
-                      className="flex items-center justify-center gap-2.5 bg-white/4 hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/[0.14] text-[13px] font-medium text-white/70 py-3 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-95"
+                      className="flex items-center justify-center gap-2.5 bg-white/4 hover:bg-white/8 border border-white/8 hover:border-white/[0.14] text-[13px] font-medium text-white/70 py-3 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-95"
                     >
                       {icon}
                       {label}
@@ -314,7 +326,7 @@ export default function LoginPage() {
           </form>
 
           <p className="text-center text-[13px] text-white/40 mt-6">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/register" className="text-[#7C5CFC] hover:text-[#9C7CFE] font-medium transition-colors">
               Sign up free
             </Link>

@@ -152,7 +152,7 @@ export default function AboutPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.06 * i }}
               whileHover={{ y: -4, scale: 1.01 }}
-              className="group rounded-2xl bg-white/3 hover:bg-white/6 border border-white/[0.06] hover:border-white/[0.12] p-6 transition-all duration-200"
+              className="group rounded-2xl bg-white/3 hover:bg-white/6 border border-white/6 hover:border-white/[0.12] p-6 transition-all duration-200"
             >
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 transition-transform duration-200 group-hover:scale-110"
@@ -188,7 +188,7 @@ export default function AboutPage() {
                 <div className="shrink-0 w-14 h-14 rounded-2xl bg-[#7C5CFC]/10 border border-[#7C5CFC]/20 flex items-center justify-center relative z-10">
                   <span className="font-display text-[11px] font-black text-[#7C5CFC]">{year}</span>
                 </div>
-                <div className="flex-1 bg-white/3 hover:bg-white/[0.05] border border-white/[0.06] rounded-2xl px-5 py-4 transition-colors duration-200 mt-1">
+                <div className="flex-1 bg-white/3 hover:bg-white/[0.05] border border-white/6 rounded-2xl px-5 py-4 transition-colors duration-200 mt-1">
                   <p className="text-[14px] text-white/70 leading-relaxed">{label}</p>
                 </div>
               </motion.div>
@@ -214,7 +214,7 @@ export default function AboutPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08 * i }}
               whileHover={{ y: -4 }}
-              className="rounded-2xl bg-white/3 hover:bg-white/6 border border-white/[0.06] hover:border-white/[0.12] p-6 text-center transition-all duration-200"
+              className="rounded-2xl bg-white/3 hover:bg-white/6 border border-white/6 hover:border-white/[0.12] p-6 text-center transition-all duration-200"
             >
               <div
                 className="w-14 h-14 rounded-2xl flex items-center justify-center text-[18px] font-black mx-auto mb-4"

@@ -58,7 +58,7 @@ export default function HomePage() {
           </div>
 
           <h1 className="font-display text-[44px] sm:text-[64px] md:text-[80px] font-black leading-[0.95] tracking-tighter mb-5 sm:mb-6">
-            Banking that's{" "}
+            Banking that&apos;s{" "}
             <span className="relative">
               <span className="bg-gradient-to-r from-[#7C5CFC] via-[#FC5C7D] to-[#FCA75C] bg-clip-text text-transparent">
                 actually
@@ -174,7 +174,7 @@ export default function HomePage() {
         <div className="mb-10 sm:mb-14 max-w-lg">
           <p className="text-[11px] font-semibold text-[#7C5CFC] uppercase tracking-widest mb-3">Features</p>
           <h2 className="font-display text-[30px] sm:text-[40px] font-black tracking-tight leading-tight mb-4">
-            Everything you need,<br />nothing you don't.
+            Everything you need,<br />nothing you don&apos;t.
           </h2>
           <p className="text-[14px] text-white/50 leading-relaxed">
             Built for speed and simplicity. Tools to manage, move, and grow your money — beautifully.
@@ -193,7 +193,7 @@ export default function HomePage() {
               key={label}
               whileHover={{ y: -4, scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="group bg-white/3 hover:bg-white/6 border border-white/[0.06] hover:border-white/[0.12] rounded-2xl p-5 sm:p-6 cursor-pointer transition-colors duration-200"
+              className="group bg-white/3 hover:bg-white/6 border border-white/6 hover:border-white/[0.12] rounded-2xl p-5 sm:p-6 cursor-pointer transition-colors duration-200"
             >
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 sm:mb-5"
@@ -242,7 +242,7 @@ export default function HomePage() {
               className={`relative rounded-2xl p-6 sm:p-7 border transition-all duration-200 ${
                 accent
                   ? "bg-gradient-to-b from-[#7C5CFC]/20 to-[#7C5CFC]/5 border-[#7C5CFC]/50 shadow-[0_0_40px_rgba(124,92,252,0.2)]"
-                  : "bg-white/3 border-white/[0.06] hover:border-white/[0.12]"
+                  : "bg-white/3 border-white/6 hover:border-white/[0.12]"
               }`}
             >
               {badge && (
@@ -298,14 +298,14 @@ export default function HomePage() {
               key={name}
               whileHover={{ y: -3 }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="bg-white/3 border border-white/[0.06] hover:border-white/[0.12] rounded-2xl p-6 sm:p-7 transition-colors duration-200"
+              className="bg-white/3 border border-white/6 hover:border-white/[0.12] rounded-2xl p-6 sm:p-7 transition-colors duration-200"
             >
               <div className="flex gap-0.5 mb-4 sm:mb-5">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="w-3.5 h-3.5 fill-[#FCA75C] text-[#FCA75C]" />
                 ))}
               </div>
-              <p className="text-[13.5px] text-white/60 leading-relaxed mb-5 sm:mb-6 italic">"{quote}"</p>
+              <p className="text-[13.5px] text-white/60 leading-relaxed mb-5 sm:mb-6 italic">&quot;{quote}&quot;</p>
               <div className="flex items-center gap-3">
                 <div
                   className="w-9 h-9 rounded-xl flex items-center justify-center text-[11px] font-bold flex-shrink-0"
@@ -332,7 +332,7 @@ export default function HomePage() {
               Ready to bank smarter?
             </h2>
             <p className="text-white/70 text-[14px] sm:text-[15px] mb-8 sm:mb-10">
-              Join 2.4 million people who've already made the switch.
+              Join 2.4 million people who&apos;ve already made the switch.
             </p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
               <Link href="/register">

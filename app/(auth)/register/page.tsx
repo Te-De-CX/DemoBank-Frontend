@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Eye, EyeOff, Mail, Lock, User, Check } from "lucide-react";
 import api from "@/lib/axios"; // your axios instance
+import axios from "axios";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -63,17 +64,25 @@ export default function RegisterPage() {
       // 2. Or call the login endpoint to get tokens, then redirect.
       // Let's redirect to login with a message.
       router.push("/login?registered=true");
-    } catch (err: any) {
-      const data = err.response?.data;
-      if (data) {
-        // Format error messages from DRF
-        const messages = Object.entries(data)
-          .map(([key, value]) => (Array.isArray(value) ? value.join(" ") : value))
-          .join(" | ");
-        setError(messages || "Registration failed. Please try again.");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const data = err.response?.data;
+    
+        if (data && typeof data === "object") {
+          const messages = Object.entries(data)
+            .map(([, value]) =>
+              Array.isArray(value) ? value.join(" ") : String(value)
+            )
+            .join(" | ");
+    
+          setError(messages || "Registration failed. Please try again.");
+        } else {
+          setError("Registration failed. Please try again.");
+        }
       } else {
         setError("Network error. Please check your connection.");
       }
+    
       setLoading(false);
     }
   };
@@ -125,7 +134,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Bottom card */}
-        <div className="relative bg-white/4 border border-white/[0.08] rounded-2xl p-5">
+        <div className="relative bg-white/4 border border-white/8 rounded-2xl p-5">
           <div className="flex items-center gap-3 mb-1">
             <div className="w-8 h-8 rounded-xl bg-[#7C5CFC]/20 flex items-center justify-center text-[11px] font-bold text-[#7C5CFC] font-display">
               SK
@@ -136,7 +145,7 @@ export default function RegisterPage() {
             </div>
           </div>
           <p className="text-[12.5px] text-white/55 leading-relaxed italic">
-            "Setup took 2 minutes. Now I save hours every month on expense tracking."
+          &quot;Setup took 2 minutes. Now I save hours every month on expense tracking.&quot;
           </p>
         </div>
       </div>
@@ -167,7 +176,7 @@ export default function RegisterPage() {
                   value={form.first_name}
                   onChange={(e) => setForm({ ...form, first_name: e.target.value })}
                   required
-                  className="w-full bg-white/4 border border-white/[0.08] hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/[0.06] outline-none text-[13px] text-white placeholder:text-white/20 px-4 py-3 rounded-xl transition-all duration-200"
+                  className="w-full bg-white/4 border border-white/8 hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/6 outline-none text-[13px] text-white placeholder:text-white/20 px-4 py-3 rounded-xl transition-all duration-200"
                 />
               </div>
               <div>
@@ -178,7 +187,7 @@ export default function RegisterPage() {
                   value={form.last_name}
                   onChange={(e) => setForm({ ...form, last_name: e.target.value })}
                   required
-                  className="w-full bg-white/4 border border-white/[0.08] hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/[0.06] outline-none text-[13px] text-white placeholder:text-white/20 px-4 py-3 rounded-xl transition-all duration-200"
+                  className="w-full bg-white/4 border border-white/8 hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/6 outline-none text-[13px] text-white placeholder:text-white/20 px-4 py-3 rounded-xl transition-all duration-200"
                 />
               </div>
             </div>
@@ -194,7 +203,7 @@ export default function RegisterPage() {
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   required
-                  className="w-full bg-white/4 border border-white/[0.08] hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/[0.06] outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-4 py-3 rounded-xl transition-all duration-200"
+                  className="w-full bg-white/4 border border-white/8 hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/6 outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-4 py-3 rounded-xl transition-all duration-200"
                 />
               </div>
             </div>
@@ -210,7 +219,7 @@ export default function RegisterPage() {
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   required
-                  className="w-full bg-white/4 border border-white/[0.08] hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/[0.06] outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-10 py-3 rounded-xl transition-all duration-200"
+                  className="w-full bg-white/4 border border-white/8 hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/6 outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-10 py-3 rounded-xl transition-all duration-200"
                 />
                 <button
                   type="button"
@@ -253,12 +262,12 @@ export default function RegisterPage() {
                   value={form.confirm}
                   onChange={(e) => setForm({ ...form, confirm: e.target.value })}
                   required
-                  className={`w-full bg-white/4 border hover:border-white/[0.14] focus:bg-white/[0.06] outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-10 py-3 rounded-xl transition-all duration-200 ${
+                  className={`w-full bg-white/4 border hover:border-white/[0.14] focus:bg-white/6 outline-none text-[13px] text-white placeholder:text-white/20 pl-10 pr-10 py-3 rounded-xl transition-all duration-200 ${
                     form.confirm.length > 0
                       ? form.confirm === form.password
                         ? "border-[#5CF0B0]/50 focus:border-[#5CF0B0]/70"
                         : "border-[#FC5C7D]/50 focus:border-[#FC5C7D]/70"
-                      : "border-white/[0.08] focus:border-[#7C5CFC]/60"
+                      : "border-white/8 focus:border-[#7C5CFC]/60"
                   }`}
                 />
                 <button

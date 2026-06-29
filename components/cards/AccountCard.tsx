@@ -110,7 +110,7 @@ export function AccountCard({
       </div>
 
       {/* Action bar */}
-      <div className="flex border-t border-white/[0.08] bg-white/4">
+      <div className="flex border-t border-white/8 bg-white/4">
         <button
           onClick={onSend}
           className="flex-1 flex items-center justify-center gap-1.5 py-3 text-[12px] font-semibold text-white/50 hover:text-white hover:bg-white/6 transition-all duration-200 border-r border-white/[0.07]"

@@ -142,7 +142,10 @@ export default function DashboardLayout({
 
   // Close drawer on route change
   const pathname = usePathname();
-  useEffect(() => setDrawerOpen(false), [pathname]);
+ // eslint-disable-next-line react-hooks/set-state-in-effect
+useEffect(() => {
+  setDrawerOpen(false);
+}, [pathname]);
 
   if (isLoading) {
     return (

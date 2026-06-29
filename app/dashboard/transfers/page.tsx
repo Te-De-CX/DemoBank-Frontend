@@ -4,15 +4,12 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowUpRight,
-  ArrowDownLeft,
   ArrowLeft,
   ArrowRight,
   Check,
-  X,
-  Search,
   Clock,
-  ReceiptText,
 } from "lucide-react";
+import axios from "axios";
 import api from "@/lib/axios";
 import { useToast } from "@/components/ui/use-toast";
 import { Account, Transaction } from "@/types";
@@ -134,12 +131,18 @@ export default function TransfersPage() {
       });
       setStep(3);
     },
-    onError: (err: any) =>
+    onError: (err: unknown) => {
+      const message =
+        axios.isAxiosError(err)
+          ? err.response?.data?.error ?? "Transfer failed."
+          : "Transfer failed.";
+    
       toast({
         title: "Transfer failed",
-        description: err.response?.data?.error,
+        description: message,
         variant: "destructive",
-      }),
+      });
+    },
   });
 
   const reset = () => {

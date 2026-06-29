@@ -3,6 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 import {
   Wallet,
   TrendingUp,
@@ -27,6 +28,7 @@ import {
   Area,
   AreaChart,
 } from "recharts";
+import type { TooltipProps } from "recharts";
 import api from "@/lib/axios";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuthStore } from "@/store/auth-store";
@@ -146,9 +148,19 @@ function FundModal({ open, onClose }: { open: boolean; onClose: () => void }) {
       onClose();
       setAmount("");
     },
-    onError: (err: any) =>
-      toast({ title: "Deposit failed", description: err.response?.data?.error, variant: "destructive" }),
-  });
+    onError: (err: unknown) => {
+      const message =
+        axios.isAxiosError(err)
+          ? err.response?.data?.error ?? "Deposit failed."
+          : "Deposit failed.";
+    
+      toast({
+        title: "Deposit failed",
+        description: message,
+        variant: "destructive",
+      });
+}})
+  
 
   return (
     <Modal open={open} onClose={onClose} title="Add funds" subtitle="Choose an amount or enter a custom value.">
@@ -233,8 +245,18 @@ function TransferModal({
       toast({ title: "Transfer complete!", description: `$${amount} sent to ${recipient}.`, variant: "success" });
       setStep(3);
     },
-    onError: (err: any) =>
-      toast({ title: "Transfer failed", description: err.response?.data?.error, variant: "destructive" }),
+    onError: (err: unknown) => {
+      const message =
+        axios.isAxiosError(err)
+          ? err.response?.data?.error ?? "Transfer failed."
+          : "Transfer failed.";
+    
+      toast({
+        title: "Transfer failed",
+        description: message,
+        variant: "destructive",
+      });
+    },
   });
 
   const reset = () => {
@@ -381,16 +403,32 @@ function Skeleton({ className = "" }: { className?: string }) {
 }
 
 /* ─── Custom chart tooltip ───────────────────────────────────────── */
-function ChartTooltip({ active, payload, label }: any) {
+type ChartTooltipProps = {
+  active?: boolean;
+  label?: string | number;
+  payload?: Array<{
+    value: number | string;
+  }>;
+};
+
+function ChartTooltip({
+  active,
+  payload,
+  label,
+}: ChartTooltipProps) {
   if (!active || !payload?.length) return null;
+
   return (
     <div className="bg-[#1C1C2E] border border-white/10 rounded-xl px-4 py-2.5 shadow-xl">
-      <p className="text-[11px] text-white/40 uppercase tracking-widest mb-1">{label}</p>
-      <p className="text-[15px] font-bold text-white">{formatCurrency(payload[0].value)}</p>
+      <p className="text-[11px] text-white/40 uppercase tracking-widest mb-1">
+        {label}
+      </p>
+      <p className="text-[15px] font-bold text-white">
+        {formatCurrency(Number(payload[0].value))}
+      </p>
     </div>
   );
 }
-
 /* ─── Dashboard Page ─────────────────────────────────────────────── */
 export default function DashboardPage() {
   const [fundOpen, setFundOpen] = useState(false);
@@ -456,7 +494,7 @@ export default function DashboardPage() {
           <h1 className="font-display text-[32px] sm:text-[40px] font-black tracking-tight text-white leading-tight">
             Hey, {firstName} 👋
           </h1>
-          <p className="text-[13px] text-white/40 mt-1">Here's your financial overview</p>
+          <p className="text-[13px] text-white/40 mt-1">Here&apos;s your financial overview</p>
         </div>
         <div className="flex gap-3">
           <button

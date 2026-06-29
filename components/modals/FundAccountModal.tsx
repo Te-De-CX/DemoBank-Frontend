@@ -6,8 +6,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios";
 import { useToast } from "@/components/ui/use-toast";
 import { X, PlusCircle, Check } from "lucide-react";
+import axios from "axios";
 
 const QUICK = ["500", "1000", "2500", "5000"];
+type ApiError = {
+  error?: string;
+};
 
 function Modal({
   open,
@@ -82,12 +86,17 @@ export function FundAccountModal({
         setDone(false);
       }, 1800);
     },
-    onError: (err: any) =>
+    onError: (err: unknown) => {
+      const message = axios.isAxiosError<ApiError>(err)
+        ? err.response?.data?.error ?? "Deposit failed."
+        : "Deposit failed.";
+    
       toast({
         title: "Deposit failed",
-        description: err.response?.data?.error,
+        description: message,
         variant: "destructive",
-      }),
+      });
+    },
   });
 
   return (

@@ -96,7 +96,7 @@ export default function NotificationsPage() {
         >
           <BellOff className="h-12 w-12 mb-4" />
           <p className="text-[15px] font-semibold">No notifications yet</p>
-          <p className="text-[13px] mt-1">We'll let you know when something happens.</p>
+          <p className="text-[13px] mt-1">We&apos;ll let you know when something happens.</p>
         </motion.div>
       ) : (
         <div className="space-y-2">

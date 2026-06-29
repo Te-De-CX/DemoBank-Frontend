@@ -1,5 +1,5 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { billPaymentSchema } from "@/lib/validations";
 import { z } from "zod";
@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios";
 import { useToast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
+import axios from "axios";
 import {
   Smartphone,
   Wifi,
@@ -16,15 +17,26 @@ import {
   CheckCircle,
   AlertTriangle,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useState } from "react";
 
-const BILL_TYPES = [
+type BillType = z.infer<typeof billPaymentSchema>["bill_type"];
+
+const BILL_TYPES: {
+  value: BillType;
+  label: string;
+  icon: LucideIcon;
+  color: string;
+  bg: string;
+}[] = [
   { value: "airtime",    label: "Airtime",    icon: Smartphone, color: "#7C5CFC", bg: "rgba(124,92,252,0.12)" },
   { value: "internet",   label: "Internet",   icon: Wifi,       color: "#5CC8F0", bg: "rgba(92,200,240,0.12)" },
   { value: "utilities",  label: "Utilities",  icon: Zap,        color: "#FCA75C", bg: "rgba(252,167,92,0.12)" },
   { value: "cable",      label: "Cable TV",   icon: Tv,         color: "#FC5C7D", bg: "rgba(252,92,125,0.12)" },
   { value: "education",  label: "Education",  icon: GraduationCap, color: "#5CF0B0", bg: "rgba(92,240,176,0.12)" },
 ];
+
+type BillPaymentForm = z.infer<typeof billPaymentSchema>;
 
 function Field({
   label,
@@ -79,10 +91,14 @@ export default function PaymentsPage() {
     },
   });
 
-  const selectedType = form.watch("bill_type");
+  const selectedType = useWatch({
+    control: form.control,
+    name: "bill_type",
+  });
 
   const mutation = useMutation({
-    mutationFn: (data: any) => api.post("/transactions/bill_payment/", data),
+    mutationFn: (data: BillPaymentForm) =>
+      api.post("/transactions/bill_payment/", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
@@ -90,8 +106,18 @@ export default function PaymentsPage() {
       setPaid(true);
       setTimeout(() => { setPaid(false); form.reset(); }, 2400);
     },
-    onError: (err: any) =>
-      toast({ title: "Payment failed", description: err.response?.data?.error, variant: "destructive" }),
+    onError: (err: unknown) => {
+      const message =
+        axios.isAxiosError(err)
+          ? err.response?.data?.error ?? "Payment failed."
+          : "Payment failed.";
+    
+      toast({
+        title: "Payment failed",
+        description: message,
+        variant: "destructive",
+      });
+    },
   });
 
   return (
@@ -119,7 +145,7 @@ export default function PaymentsPage() {
               <button
                 key={value}
                 type="button"
-                onClick={() => form.setValue("bill_type", value as any)}
+                onClick={() => form.setValue("bill_type", value)}
                 className={`flex flex-col items-center gap-2 p-4 rounded-2xl border transition-all duration-200 hover:scale-105 active:scale-95 ${
                   active
                     ? "border-[#7C5CFC]/50 bg-[#7C5CFC]/10"

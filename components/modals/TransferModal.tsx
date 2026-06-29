@@ -18,6 +18,12 @@ import { useToast } from "@/components/ui/use-toast";
 import { ArrowRight, Check, ArrowLeft } from "lucide-react";
 import { Account } from "@/types";
 import { formatCurrency } from "@/lib/utils";
+import axios from "axios";
+
+type ApiError = {
+  error?: string;
+};
+
 
 export function TransferModal({ children }: { children?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -49,8 +55,16 @@ export function TransferModal({ children }: { children?: React.ReactNode }) {
       setStep(1);
       setOpen(false);
     },
-    onError: (err: any) => {
-      toast({ title: "Transfer failed", description: err.response?.data?.error, variant: "destructive" });
+    onError: (err: unknown) => {
+      const message = axios.isAxiosError<ApiError>(err)
+        ? err.response?.data?.error ?? "Transfer failed."
+        : "Transfer failed.";
+  
+      toast({
+        title: "Transfer failed",
+        description: message,
+        variant: "destructive",
+      });
     },
   });
 

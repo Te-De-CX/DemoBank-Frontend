@@ -72,7 +72,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   return (
     <button
       onClick={() => setOpen((o) => !o)}
-      className="w-full text-left rounded-2xl bg-white/3 hover:bg-white/[0.05] border border-white/[0.06] hover:border-white/[0.1] px-6 py-5 transition-all duration-200"
+      className="w-full text-left rounded-2xl bg-white/3 hover:bg-white/[0.05] border border-white/6 hover:border-white/[0.1] px-6 py-5 transition-all duration-200"
     >
       <div className="flex items-center justify-between gap-4">
         <span className="text-[14px] font-semibold text-white">{q}</span>
@@ -83,7 +83,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         )}
       </div>
       {open && (
-        <p className="text-[13px] text-white/50 mt-3 leading-relaxed border-t border-white/[0.06] pt-3">
+        <p className="text-[13px] text-white/50 mt-3 leading-relaxed border-t border-white/6 pt-3">
           {a}
         </p>
       )}
@@ -136,13 +136,13 @@ export default function ContactPage() {
             Average response time — under 4 hours
           </div>
           <h1 className="font-display text-[52px] sm:text-[72px] font-black tracking-tighter leading-[0.93] mb-5">
-            We're here to{" "}
+            We&apos;re here to{" "}
             <span className="bg-gradient-to-r from-[#7C5CFC] via-[#FC5C7D] to-[#FCA75C] bg-clip-text text-transparent">
               help.
             </span>
           </h1>
           <p className="text-[15px] text-white/45 max-w-md mx-auto leading-relaxed">
-            Got a question, a problem, or just want to say hi? Pick a channel and we'll get back to you fast.
+            Got a question, a problem, or just want to say hi? Pick a channel and we&apos;ll get back to you fast.
           </p>
         </motion.div>
       </section>
@@ -158,7 +158,7 @@ export default function ContactPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.07 * i }}
               whileHover={{ y: -4, scale: 1.01 }}
-              className="group rounded-2xl bg-white/3 hover:bg-white/6 border border-white/[0.06] hover:border-white/[0.12] p-6 transition-all duration-200"
+              className="group rounded-2xl bg-white/3 hover:bg-white/6 border border-white/6 hover:border-white/[0.12] p-6 transition-all duration-200"
             >
               <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-transform duration-200 group-hover:scale-110"
@@ -282,7 +282,7 @@ export default function ContactPage() {
           </div>
 
           {/* Social row */}
-          <div className="mt-8 pt-7 border-t border-white/[0.06]">
+          <div className="mt-8 pt-7 border-t border-white/6">
             <p className="text-[12px] text-white/35 uppercase tracking-widest mb-4">Follow us</p>
             <div className="flex items-center gap-3">
               {[

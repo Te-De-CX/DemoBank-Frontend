@@ -42,7 +42,7 @@
        variants: {
          variant: {
            default:
-             "bg-[#1C1C2E]/90 border-white/[0.08] text-white",
+             "bg-[#1C1C2E]/90 border-white/8 text-white",
            destructive:
              "bg-[#1A0A0A]/90 border-red-500/20 text-white",
            success:

@@ -105,7 +105,7 @@ export default function TermsPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.06 * i + 0.15 }}
-            className="rounded-2xl bg-white/3 hover:bg-white/[0.05] border border-white/[0.06] hover:border-white/[0.1] px-7 py-6 transition-colors duration-200"
+            className="rounded-2xl bg-white/3 hover:bg-white/[0.05] border border-white/6 hover:border-white/[0.1] px-7 py-6 transition-colors duration-200"
           >
             <div className="flex items-start gap-4">
               <div className="shrink-0 w-7 h-7 rounded-lg bg-[#7C5CFC]/15 flex items-center justify-center mt-0.5">

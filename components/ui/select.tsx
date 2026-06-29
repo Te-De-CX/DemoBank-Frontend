@@ -19,7 +19,7 @@ export function SelectNative({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={cn(
-          "flex h-10 w-full rounded-xl bg-white/4 border border-white/[0.08] hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/[0.06] px-3 py-2 text-sm text-white placeholder:text-white/20 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200",
+          "flex h-10 w-full rounded-xl bg-white/4 border border-white/8 hover:border-white/[0.14] focus:border-[#7C5CFC]/60 focus:bg-white/6 px-3 py-2 text-sm text-white placeholder:text-white/20 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200",
           className
         )}
       >

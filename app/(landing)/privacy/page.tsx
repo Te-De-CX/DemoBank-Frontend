@@ -88,7 +88,7 @@ export default function PrivacyPage() {
             <br />matters to us.
           </h1>
           <p className="text-[15px] text-white/45 max-w-md mx-auto leading-relaxed">
-            We believe privacy is a right, not a feature. Here's exactly what data we collect, why, and how we protect it.
+            We believe privacy is a right, not a feature. Here&apos;s exactly what data we collect, why, and how we protect it.
           </p>
         </motion.div>
       </section>
@@ -122,7 +122,7 @@ export default function PrivacyPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.06 * i + 0.15 }}
-            className="group rounded-2xl bg-white/3 hover:bg-white/[0.05] border border-white/[0.06] hover:border-white/[0.1] px-7 py-6 transition-all duration-200"
+            className="group rounded-2xl bg-white/3 hover:bg-white/[0.05] border border-white/6 hover:border-white/[0.1] px-7 py-6 transition-all duration-200"
           >
             <div className="flex items-start gap-4">
               <div
