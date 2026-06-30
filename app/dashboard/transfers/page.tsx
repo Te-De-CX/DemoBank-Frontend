@@ -13,7 +13,7 @@ import axios from "axios";
 import api from "@/lib/axios";
 import { useToast } from "@/components/ui/use-toast";
 import { Account, Transaction } from "@/types";
-import { formatCurrency, formatDate, maskAccountNumber } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 
 /* ─── Shared field ─────────────────────────────────────────────────── */
 function Field({

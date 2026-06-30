@@ -9,7 +9,6 @@ import {
   ArrowDownLeft,
   TrendingUp,
 } from "lucide-react";
-import Link from "next/link";
 
 const CARD_THEMES = [
   {

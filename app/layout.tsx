@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Syne } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -9,12 +9,12 @@ const inter = Inter({
   display: "swap",
 });
 
-const syne = Syne({
-  subsets: ["latin"],
-  variable: "--font-syne",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
+// const syne = Syne({
+//   subsets: ["latin"],
+//   variable: "--font-syne",
+//   display: "swap",
+//   weight: ["400", "500", "600", "700", "800"],
+// });
 
 export const metadata: Metadata = {
   title: "DigiBank — Banking made beautiful",

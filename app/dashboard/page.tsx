@@ -5,7 +5,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import {
-  Wallet,
   TrendingUp,
   ArrowUpRight,
   ArrowDownLeft,
@@ -18,8 +17,6 @@ import {
   ReceiptText,
 } from "lucide-react";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -28,7 +25,6 @@ import {
   Area,
   AreaChart,
 } from "recharts";
-import type { TooltipProps } from "recharts";
 import api from "@/lib/axios";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuthStore } from "@/store/auth-store";

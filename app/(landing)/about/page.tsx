@@ -98,7 +98,7 @@ export default function AboutPage() {
             Founded 2021 · Lagos, Nigeria
           </div>
           <h1 className="font-display text-[56px] sm:text-[80px] font-black tracking-tighter leading-[0.92] mb-7">
-            We're reimagining
+            We&apos;re reimagining
             <br />
             <span className="bg-gradient-to-r from-[#7C5CFC] via-[#FC5C7D] to-[#FCA75C] bg-clip-text text-transparent">
               what banking
@@ -238,7 +238,7 @@ export default function AboutPage() {
               Be part of the story.
             </h2>
             <p className="text-white/70 text-[15px] mb-8 max-w-sm mx-auto">
-              Join millions who've already made the switch to smarter banking.
+              Join millions who&apos;ve already made the switch to smarter banking.
             </p>
             <Link href="/register">
               <button className="group inline-flex items-center gap-2 bg-white text-[#7C5CFC] text-[14px] font-bold px-8 py-3.5 rounded-2xl transition-all duration-200 hover:scale-105 hover:shadow-xl active:scale-95">

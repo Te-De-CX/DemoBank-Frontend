@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Eye, EyeOff, Mail, Lock, User, Check } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, Mail, Lock, Check } from "lucide-react";
 import api from "@/lib/axios"; // your axios instance
 import axios from "axios";
 
@@ -56,6 +56,7 @@ export default function RegisterPage() {
         password: form.password,
         password2: form.confirm,
       });
+      console.log(response)
 
       // Registration successful – you can either:
       // 1. Automatically log them in (if backend returns tokens or sets cookies)

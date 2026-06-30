@@ -24,6 +24,7 @@ export default function SavingsPage() {
     queryFn: () => api.get("/savings/goals/").then(r => r.data),
   });
 
+  console.log(isLoading)
   const addGoal = useMutation({
     mutationFn: () => api.post("/savings/goals/", { name: goalName, target_amount: parseFloat(targetAmount) }),
     onSuccess: () => {
