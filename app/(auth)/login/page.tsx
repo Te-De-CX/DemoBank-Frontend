@@ -38,40 +38,54 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: LoginFormValues) => {
+    console.log("Submitting login...");
+    console.log(data);
+  
     try {
-      const response = await login(data.email, data.password, totp || undefined);
+      const response = await login(
+        data.email,
+        data.password,
+        totp || undefined
+      );
+  
+      console.log("Login response:");
+      console.log(response);
+  
       if (response?.require_2fa) {
+        console.log("2FA required");
         setIs2FA(true);
       } else {
-        // Try to fetch user profile – if it fails, show a message
+        console.log("Login successful");
+  
         try {
+          console.log("Fetching profile...");
+  
           await useAuthStore.getState().fetchUser();
+  
+          console.log("Profile fetched!");
+  
           const user = useAuthStore.getState().user;
+  
+          console.log("Current user:");
+          console.log(user);
+  
           if (!user?.phone) {
+            console.log("Redirecting -> complete-profile");
             router.push("/complete-profile");
           } else {
+            console.log("Redirecting -> dashboard");
             router.push("/dashboard");
           }
-        } catch (profileError) {
-          toast({
-            title: "Login successful, but failed to load profile",
-            description: "Please try again or contact support.",
-            variant: "destructive",
-          });
+  
+        } catch (err) {
+          console.error("fetchUser failed");
+          console.error(err);
         }
       }
-    } catch (err: unknown) {
-      const error = err as ApiError;
-    
-      const msg =
-        error.response?.data?.error ??
-        "Login failed. Please check your credentials.";
-    
-      toast({
-        title: is2FA ? "Invalid 2FA code" : "Login failed",
-        description: msg,
-        variant: "destructive",
-      });
+  
+    } catch (err) {
+      console.error("LOGIN FAILED");
+      console.error(err);
     }
   };
 
