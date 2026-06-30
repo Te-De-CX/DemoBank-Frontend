@@ -11,6 +11,8 @@ const api = axios.create({
   },
 });
 
+console.log(process.env.NEXT_PUBLIC_API_URL);
+
 // Response interceptor to handle token refresh
 api.interceptors.response.use(
   (response) => response,
