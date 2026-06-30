@@ -43,14 +43,21 @@ export default function LoginPage() {
       if (response?.require_2fa) {
         setIs2FA(true);
       } else {
-        // Fetch the user profile to check if phone is set
-        await useAuthStore.getState().fetchUser();
-        const user = useAuthStore.getState().user;
-        // If phone is missing, go to profile completion
-        if (!user?.phone) {
-          router.push("/complete-profile");
-        } else {
-          router.push("/dashboard");
+        // Try to fetch user profile – if it fails, show a message
+        try {
+          await useAuthStore.getState().fetchUser();
+          const user = useAuthStore.getState().user;
+          if (!user?.phone) {
+            router.push("/complete-profile");
+          } else {
+            router.push("/dashboard");
+          }
+        } catch (profileError) {
+          toast({
+            title: "Login successful, but failed to load profile",
+            description: "Please try again or contact support.",
+            variant: "destructive",
+          });
         }
       }
     } catch (err: unknown) {
