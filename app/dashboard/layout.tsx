@@ -105,9 +105,9 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
 /* ─── Mobile header ───────────────────────────────────────────────── */
 function MobileHeader({ onOpen }: { onOpen: () => void }) {
   const pathname = usePathname();
-  const currentNav = NAV.find((n) =>
-    n.href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(n.href)
-  );
+  // const currentNav = NAV.find((n) =>
+  //   n.href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(n.href)
+  // );
 
   return (
     <header className="fixed top-0 left-0 right-0 z-30 md:hidden flex items-center justify-between px-5 py-4 bg-[#0A0A0F]/90 backdrop-blur-xl border-b border-white/6">
