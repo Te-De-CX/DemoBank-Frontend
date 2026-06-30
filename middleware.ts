@@ -2,26 +2,10 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-
-  console.log("Current URL:", request.nextUrl.pathname);
-  const accessToken = request.cookies.get("access_token")?.value;
-  const isAuthPage = request.nextUrl.pathname.startsWith("/login") || 
-                     request.nextUrl.pathname.startsWith("/register");
-  console.log("Middleware token:", accessToken);
-  // If not authenticated and trying to access protected routes, redirect to login
-  if (!accessToken && request.nextUrl.pathname.startsWith("/dashboard") || 
-      !accessToken && request.nextUrl.pathname.startsWith("/admin")) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-
-  // If authenticated and on auth pages, redirect to dashboard
-  if (accessToken && isAuthPage) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
+  // No token check here – authentication is handled client-side
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin/:path*", "/login", "/register"],
+  matcher: ["/dashboard/:path*", "/admin/:path*"],
 };
